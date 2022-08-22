@@ -26,35 +26,35 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
 
 
         //CREAR UN USUARIO
-        //[HttpPost]
-        //public string CrearUsuario([FromBody] PostUsuario usuario)
-        //{
-        //    try
-        //    {
-
-        //        return UsuarioHandler.CrearUsuario(new Usuario
-        //        {
-
-        //            Nombre = usuario.Nombre,
-        //            Apellido = usuario.Apellido,
-        //            NombreUsuario = usuario.NombreUsuario,
-        //            Contraseña = usuario.Contraseña,
-        //            Mail = usuario.Mail
-
-        //        });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Console.WriteLine(ex.Message);
-        //        return "Error";
-        //    }
-        //}
-
-        [HttpPost("{nombre}/{apellido}/{nombreUsuario}/{contraseña}/{mail}")]
-        public string CrearUsuario(string nombre,string apellido,string nombreUsuario,string contraseña, string mail,[FromBody] PostUsuario usuario)
+        [HttpPost]
+        public string CrearUsuario([FromBody] PostUsuario usuario)
         {
-            return UsuarioHandler.CrearUsuario(nombre, apellido, nombreUsuario, contraseña, mail);
+            try
+            {
+
+                return UsuarioHandler.CrearUsuario(new Usuario
+                {
+
+                    Nombre = usuario.Nombre,
+                    Apellido = usuario.Apellido,
+                    NombreUsuario = usuario.NombreUsuario,
+                    Contraseña = usuario.Contraseña,
+                    Mail = usuario.Mail
+
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return "Error";
+            }
         }
+
+        //[HttpPost("{nombre}/{apellido}/{nombreUsuario}/{contraseña}/{mail}")]
+        //public string CrearUsuario(string nombre,string apellido,string nombreUsuario,string contraseña, string mail,[FromBody] PostUsuario usuario)
+        //{
+        //    return UsuarioHandler.CrearUsuario(nombre, apellido, nombreUsuario, contraseña, mail);
+        //}
 
         //MODIFICAR UN USUARIO
         [HttpPut]
