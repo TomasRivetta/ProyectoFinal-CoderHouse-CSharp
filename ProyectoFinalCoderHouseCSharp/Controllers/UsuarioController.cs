@@ -13,7 +13,7 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
         [HttpGet("{nombreUsuario}/{contraseña}")]
         public bool InicioSesionUsuarios(string nombreUsuario, string contraseña)
         {
-            Usuario usuario = UsuarioHandler.InicioSesionUsuarios(nombreUsuario,contraseña);
+            Usuario usuario = UsuarioHandler.InicioSesionUsuarios(nombreUsuario, contraseña);
             if (usuario.Nombre == null)
             {
                 return false;
@@ -26,28 +26,34 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
 
 
         //CREAR UN USUARIO
-        [HttpPost]
-        public string CrearUsuario([FromBody] PostUsuario usuario)
+        //[HttpPost]
+        //public string CrearUsuario([FromBody] PostUsuario usuario)
+        //{
+        //    try
+        //    {
+
+        //        return UsuarioHandler.CrearUsuario(new Usuario
+        //        {
+
+        //            Nombre = usuario.Nombre,
+        //            Apellido = usuario.Apellido,
+        //            NombreUsuario = usuario.NombreUsuario,
+        //            Contraseña = usuario.Contraseña,
+        //            Mail = usuario.Mail
+
+        //        });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine(ex.Message);
+        //        return "Error";
+        //    }
+        //}
+
+        [HttpPost("{nombre}/{apellido}/{nombreUsuario}/{contraseña}/{mail}")]
+        public string CrearUsuario(string nombre,string apellido,string nombreUsuario,string contraseña, string mail,[FromBody] PostUsuario usuario)
         {
-            try
-            {
-
-                return UsuarioHandler.CrearUsuario(new Usuario
-                {
-
-                    Nombre = usuario.Nombre,
-                    Apellido = usuario.Apellido,
-                    NombreUsuario = usuario.NombreUsuario,
-                    Contraseña = usuario.Contraseña,
-                    Mail = usuario.Mail
-
-                });
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return "Error";
-            }
+            return UsuarioHandler.CrearUsuario(nombre, apellido, nombreUsuario, contraseña, mail);
         }
 
         //MODIFICAR UN USUARIO
