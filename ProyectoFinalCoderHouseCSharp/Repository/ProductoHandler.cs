@@ -9,43 +9,6 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
 
         public const string ConnectionString = "Server=PCCESAR;DataBase=SistemaGestion;Trusted_Connection=True";
 
-        //Traer Productos
-        public static List<Producto> GetProductos()
-        {
-            List<Producto> resultados = new List<Producto>();
-
-            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
-            {
-                using (SqlCommand sqlCommand = new SqlCommand("SELECT * FROM Producto", sqlConnection))
-                {
-
-                    sqlConnection.Open();
-
-                    using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
-                    {
-                        if (dataReader.HasRows)
-                        {
-                            while (dataReader.Read())
-                            {
-                                Producto producto = new Producto();
-                                producto.Id = Convert.ToInt32(dataReader["Id"]);
-                                producto.Stock = Convert.ToInt32(dataReader["Stock"]);
-                                producto.IdUsuario = Convert.ToInt32(dataReader["IdUsuario"]);
-                                producto.Costo = Convert.ToInt32(dataReader["Costo"]);
-                                producto.PrecioVenta = Convert.ToInt32(dataReader["PrecioVenta"]);
-                                producto.Descripciones = dataReader["Descripciones"].ToString();
-
-                                resultados.Add(producto);
-                            }
-                        }
-                    }
-                    sqlConnection.Close();
-                }
-            }
-
-            return resultados;
-        }
-
         //Crear Producto
         public static bool CrearProducto(Producto producto)
         {
@@ -130,16 +93,15 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
             return resultado;
         }
 
-
         //Eliminar Producto
-        public static bool EliminarProducto(int id)
+        public static bool EliminarProducto(int idProducto)
         {
             bool resultado = false;
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
                 string queryDelete = "DELETE FROM ProductoVendido WHERE IdProducto = @idParameter";
 
-                SqlParameter idParameter = new SqlParameter("idParameter", SqlDbType.BigInt) { Value = id };
+                SqlParameter idParameter = new SqlParameter("idParameter", SqlDbType.BigInt) { Value = idProducto };
 
                 sqlConnection.Open();
 
@@ -160,7 +122,7 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
             {
                 string queryDelete2 = "DELETE FROM Producto WHERE Id = @idParameter";
 
-                SqlParameter idParameter = new SqlParameter("idParameter", SqlDbType.BigInt) { Value = id };
+                SqlParameter idParameter = new SqlParameter("idParameter", SqlDbType.BigInt) { Value = idProducto };
 
 
                 sqlConnection.Open();
@@ -178,5 +140,41 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
             return resultado;
         }
 
+        //Traer Productos
+        public static List<Producto> GetProductos()
+        {
+            List<Producto> resultados = new List<Producto>();
+
+            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT * FROM Producto", sqlConnection))
+                {
+
+                    sqlConnection.Open();
+
+                    using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
+                    {
+                        if (dataReader.HasRows)
+                        {
+                            while (dataReader.Read())
+                            {
+                                Producto producto = new Producto();
+                                producto.Id = Convert.ToInt32(dataReader["Id"]);
+                                producto.Stock = Convert.ToInt32(dataReader["Stock"]);
+                                producto.IdUsuario = Convert.ToInt32(dataReader["IdUsuario"]);
+                                producto.Costo = Convert.ToInt32(dataReader["Costo"]);
+                                producto.PrecioVenta = Convert.ToInt32(dataReader["PrecioVenta"]);
+                                producto.Descripciones = dataReader["Descripciones"].ToString();
+
+                                resultados.Add(producto);
+                            }
+                        }
+                    }
+                    sqlConnection.Close();
+                }
+            }
+
+            return resultados;
+        }
     }
 }

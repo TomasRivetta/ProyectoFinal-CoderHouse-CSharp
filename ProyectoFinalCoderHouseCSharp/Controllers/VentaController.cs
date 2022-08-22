@@ -1,18 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProyectoFinalCoderHouseCSharp.Controllers.DTOS;
 using ProyectoFinalCoderHouseCSharp.Model;
 using ProyectoFinalCoderHouseCSharp.Repository;
-namespace ProyectoFinalCoderHouseCSharp.Controllers.DTOS
+
+namespace ProyectoFinalCoderHouseCSharp.Controllers
 {
     [ApiController]
     [Route("[controller]")]
     public class VentaController : ControllerBase
     {
-        //Traer Venta
-        [HttpGet]
-        public List<Venta> GetVentas()
-        {
-            return VentaHandler.GetVentas();
-        }
 
         //Cargar Venta
         [HttpPost]
@@ -33,6 +29,28 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers.DTOS
                 Console.WriteLine(ex.Message);
                 return false;
             }
+        }
+
+        //Eliminar Venta
+        [HttpDelete("{id}")]
+        public bool EliminarVenta([FromBody] int id)
+        {
+            try
+            {
+                return VentaHandler.EliminarVenta(id);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+
+        //Traer Venta
+        [HttpGet]
+        public List<Venta> GetVentas()
+        {
+            return VentaHandler.GetVentas();
         }
     }
 }

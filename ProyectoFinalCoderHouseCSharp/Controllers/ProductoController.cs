@@ -10,13 +10,6 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
     public class ProductoController : ControllerBase
     {
 
-        //Traer Productos
-        [HttpGet]
-        public List<Producto> GetProductos()
-        {
-            return ProductoHandler.GetProductos();
-        }
-
         //Crear Producto
         [HttpPost]
         public bool CrearProducto([FromBody] PostProducto producto)
@@ -41,7 +34,6 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
             }
         }
 
-
         //Modificar un Producto
         [HttpPut]
         public bool ModificarProducto([FromBody] PutProducto producto)
@@ -59,20 +51,26 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
             });
         }
 
-
         //Eliminar un Producto
-        [HttpDelete]
-        public bool EliminarProducto([FromBody] int id)
+        [HttpDelete("{idProducto}")]
+        public bool EliminarProducto([FromBody] int idProducto)
         {
             try
             {
-                return ProductoHandler.EliminarProducto(id);
+                return ProductoHandler.EliminarProducto(idProducto);
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return false;
             }
+        }
+
+        //Traer todos los productos
+        [HttpGet]
+        public List<Producto> GetProductos()
+        {
+            return ProductoHandler.GetProductos();
         }
 
     }

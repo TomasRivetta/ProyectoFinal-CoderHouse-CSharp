@@ -15,5 +15,14 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
             return ProductoVendidoHandler.GetProductosVendidos();
         }
 
+        //●	Traer Productos Vendidos: Traer Todos los productos vendidos de un Usuario,
+        //cuya información está en su producto (Utilizar dentro de esta función el "Traer Productos"
+        //anteriormente hecho para saber que productosVendidos ir a buscar).
+        [HttpGet("{idVenta}")]
+        public List<ProductoVendido> ProductosVendidos(int idVenta)
+        {
+            return ProductoVendidoHandler.ProductosVendidos(idVenta);
+        }
+
     }
 }
