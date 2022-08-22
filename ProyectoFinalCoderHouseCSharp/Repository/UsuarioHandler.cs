@@ -56,7 +56,7 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
         //Crear Usuario
         public static string CrearUsuario(Usuario usuario)
         {
-            string resultado = "NO SE PUEDE CREAR EL USUARIO";
+            string resultado = "NO SE LOGRO CREAR EL USUARIO, mismo nombre de usuario o ya existe una cuenta con ese mail ";
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
                 string queryInsert = "IF NOT EXISTS(SELECT * FROM Usuario " +

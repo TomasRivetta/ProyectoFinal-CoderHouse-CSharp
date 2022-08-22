@@ -11,7 +11,7 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
     {
 
         //Traer Productos
-        [HttpGet(Name = "GetProductos")]
+        [HttpGet]
         public List<Producto> GetProductos()
         {
             return ProductoHandler.GetProductos();
