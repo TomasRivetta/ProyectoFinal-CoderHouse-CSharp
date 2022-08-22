@@ -50,12 +50,6 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
             }
         }
 
-        //[HttpPost("{nombre}/{apellido}/{nombreUsuario}/{contraseña}/{mail}")]
-        //public string CrearUsuario(string nombre,string apellido,string nombreUsuario,string contraseña, string mail,[FromBody] PostUsuario usuario)
-        //{
-        //    return UsuarioHandler.CrearUsuario(nombre, apellido, nombreUsuario, contraseña, mail);
-        //}
-
         //MODIFICAR UN USUARIO
         [HttpPut]
         public bool ModificarUsuario([FromBody] PutUsuario usuario)

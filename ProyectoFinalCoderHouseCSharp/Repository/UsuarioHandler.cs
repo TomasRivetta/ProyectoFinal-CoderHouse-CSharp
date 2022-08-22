@@ -56,7 +56,11 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
         //Crear Usuario
         public static string CrearUsuario(Usuario usuario)
         {
-            string resultado = "NO SE LOGRO CREAR EL USUARIO, mismo nombre de usuario o ya existe una cuenta con ese mail ";
+            string resultado = "NO SE LOGRO CREAR EL USUARIO, posibles errores: " +
+                "\n* Ya existe una cuenta con ese nombre y apellido." +
+                "\n* Nombre de usuario ya en uso." +
+                "\n* Ya existe una cuenta con ese mail.";
+
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
                 string queryInsert = "IF NOT EXISTS(SELECT * FROM Usuario " +
@@ -94,49 +98,6 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
             }
             return resultado;
         }
-
-        //public static string CrearUsuario(string nombre,string apellido,string nombreUsuario, string contraseña,string mail)
-        //{
-        //    string resultado = "NO SE LOGRO CREAR EL USUARIO, mismo nombre de usuario o ya existe una cuenta con ese mail ";
-        //    using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
-        //    {
-        //        string queryInsert = "IF NOT EXISTS(SELECT * FROM Usuario " +
-        //            "WHERE (Nombre = @nombreParameter AND Apellido = @apellidoParameter) OR NombreUsuario = @nombreUsuarioParameter OR Mail = @mailParameter) " +
-        //            "BEGIN INSERT INTO [SistemaGestion].[dbo].[Usuario] " +
-        //            "(Nombre, Apellido, NombreUsuario, Contraseña, Mail) VALUES " +
-        //            "(@nombreParameter, @apellidoParameter, @nombreUsuarioParameter, @contraseñaParameter, @mailParameter) END;";
-
-        //        SqlParameter nombreParameter = new SqlParameter("nombreParameter", SqlDbType.VarChar) { Value = nombre };
-        //        SqlParameter apellidoParameter = new SqlParameter("apellidoParameter", SqlDbType.VarChar) { Value = apellido };
-        //        SqlParameter nombreUsuarioParameter = new SqlParameter("nombreUsuarioParameter", SqlDbType.VarChar) { Value = nombreUsuario };
-        //        SqlParameter contraseñaParameter = new SqlParameter("contraseñaParameter", SqlDbType.VarChar) { Value = contraseña };
-        //        SqlParameter mailParameter = new SqlParameter("mailParameter", SqlDbType.VarChar) { Value = mail };
-
-
-        //        sqlConnection.Open();
-
-        //        using (SqlCommand sqlCommand = new SqlCommand(queryInsert, sqlConnection))
-        //        {
-        //            sqlCommand.Parameters.Add(nombreParameter);
-        //            sqlCommand.Parameters.Add(apellidoParameter);
-        //            sqlCommand.Parameters.Add(nombreUsuarioParameter);
-        //            sqlCommand.Parameters.Add(contraseñaParameter);
-        //            sqlCommand.Parameters.Add(mailParameter);
-
-        //            int numberOfRows = sqlCommand.ExecuteNonQuery();
-
-        //            if (numberOfRows > 0)
-        //            {
-        //                resultado = "SE CREO EL USUARIO CON EXITO";
-        //            }
-        //        }
-
-        //        sqlConnection.Close();
-        //    }
-
-        //    return resultado;
-        //}
-
 
         //Modificar Usuario
         public static bool ModificarUsuario(Usuario usuario)

@@ -89,44 +89,44 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
                 sqlConnection.Close();
             }
 
-            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
-            {
-                string queryDelete2 = "DELETE FROM ProductoVendido WHERE IdProducto = @idParameter1";
+            //using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+            //{
+            //    string queryDelete2 = "DELETE FROM ProductoVendido WHERE IdProducto = @idParameter1";
 
-                SqlParameter idParameter1 = new SqlParameter("idParameter", SqlDbType.BigInt) { Value = id };
+            //    SqlParameter idParameter1 = new SqlParameter("idParameter1", SqlDbType.BigInt) { Value = id };
 
 
-                sqlConnection.Open();
+            //    sqlConnection.Open();
 
-                using (SqlCommand sqlCommand = new SqlCommand(queryDelete2, sqlConnection))
-                {
-                    sqlCommand.Parameters.Add(idParameter1);
-                    int numberOfRows = sqlCommand.ExecuteNonQuery();
+            //    using (SqlCommand sqlCommand = new SqlCommand(queryDelete2, sqlConnection))
+            //    {
+            //        sqlCommand.Parameters.Add(idParameter1);
+            //        int numberOfRows = sqlCommand.ExecuteNonQuery();
 
-                }
+            //    }
 
-                sqlConnection.Close();
-            }
+            //    sqlConnection.Close();
+            //}
 
-            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
-            {
+            //using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+            //{
 
-                string queryInsert3 = "UPDATE Producto SET Stock = Stock + 1 WHERE Id = @idParameter2";
+            //    string queryInsert3 = "UPDATE Producto SET Stock = Stock + 1 WHERE Descripciones = @idParameter2";
 
-                SqlParameter idParameter2 = new SqlParameter("idParameter", SqlDbType.VarChar) { Value = id };
+            //    SqlParameter idParameter2 = new SqlParameter("idParameter2", SqlDbType.VarChar) { Value = };
 
-                sqlConnection.Open();
+            //    sqlConnection.Open();
 
-                using (SqlCommand sqlCommand = new SqlCommand(queryInsert3, sqlConnection))
-                {
-                    sqlCommand.Parameters.Add(idParameter2);
+            //    using (SqlCommand sqlCommand = new SqlCommand(queryInsert3, sqlConnection))
+            //    {
+            //        sqlCommand.Parameters.Add(idParameter2);
 
-                    int numberOfRows = sqlCommand.ExecuteNonQuery();
+            //        int numberOfRows = sqlCommand.ExecuteNonQuery();
 
-                }
+            //    }
 
-                sqlConnection.Close();
-            }
+            //    sqlConnection.Close();
+            //}
 
             return resultado;
         }

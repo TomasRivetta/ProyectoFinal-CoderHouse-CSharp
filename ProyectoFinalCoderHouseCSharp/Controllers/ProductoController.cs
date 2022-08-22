@@ -73,5 +73,12 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
             return ProductoHandler.GetProductos();
         }
 
+        //Traer todos los productos de cierto Usuario
+        [HttpGet("{idUsuario}")]
+        public List<Producto> TraerProductos(int idUsuario)
+        {
+            return ProductoHandler.TraerProductos(idUsuario);
+        }
+
     }
 }

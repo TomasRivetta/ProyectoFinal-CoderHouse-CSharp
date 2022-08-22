@@ -9,15 +9,13 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
     public class ProductoVendidoController : ControllerBase
     {
         //Traer Productos vendidos
-        [HttpGet(Name = "GetProductosVendidos")]
+        [HttpGet(Name = "TodosLosProductosVendidos")]
         public List<ProductoVendido> GetProductosVendidos()
         {
             return ProductoVendidoHandler.GetProductosVendidos();
         }
 
-        //●	Traer Productos Vendidos: Traer Todos los productos vendidos de un Usuario,
-        //cuya información está en su producto (Utilizar dentro de esta función el "Traer Productos"
-        //anteriormente hecho para saber que productosVendidos ir a buscar).
+        //Traer Productos vendidos de cierto Usuario
         [HttpGet("{idVenta}")]
         public List<ProductoVendido> ProductosVendidos(int idVenta)
         {

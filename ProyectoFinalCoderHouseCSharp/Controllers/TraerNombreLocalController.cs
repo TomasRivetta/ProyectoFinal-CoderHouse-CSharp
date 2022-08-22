@@ -6,10 +6,10 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
     [Route("[controller]")]
     public class TraerNombreLocalController : ControllerBase
     {
-        [HttpGet]
-        public string TraerNombre()
+        [HttpGet("{nombreLocal}")]
+        public string TraerNombre(string nombreLocal)
         {
-            return "El nombre del Local es: ";
+            return "El nombre del Local es: " + nombreLocal;
         }
 
     }
