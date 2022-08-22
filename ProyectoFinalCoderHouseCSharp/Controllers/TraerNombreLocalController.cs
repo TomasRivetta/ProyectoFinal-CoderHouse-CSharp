@@ -11,6 +11,5 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
         {
             return "El nombre del Local es: " + nombreLocal;
         }
-
     }
 }
