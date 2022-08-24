@@ -1,6 +1,7 @@
 ﻿using ProyectoFinalCoderHouseCSharp.Model;
 using System.Data.SqlClient;
 using System.Data;
+using System;
 
 namespace ProyectoFinalCoderHouseCSharp.Repository
 {
@@ -9,7 +10,7 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
         public const string ConnectionString = "Server=PCCESAR;DataBase=SistemaGestion;Trusted_Connection=True";
 
         //Cargar Venta
-        public static bool CargarVenta(int Stock,int IdProducto,Venta venta)
+        public static bool CargarVenta(int Stock, int IdProducto, Venta venta)
         {
             bool resultado = false;
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
@@ -40,11 +41,11 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
 
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
+                string queryInsert2 = "IF EXISTS(SELECT Descripciones FROM Producto WHERE Descripciones = @comentariosParameter) BEGIN INSERT INTO ProductoVendido(Stock,IdProducto,IdVenta) VALUES (@stockParameter,@idProductoParameter,@idUsuarioParameter) END;";
 
-                string queryInsert2 = "INSERT INTO ProductoVendido(Stock,IdProducto,IdVenta) VALUES (@stockParameter,@idProductoParameter,@idUsuarioParameter);";
-
-                SqlParameter stockParameter = new SqlParameter("stockParameter", SqlDbType.VarChar) { Value = Stock };
-                SqlParameter idProductoParameter = new SqlParameter("idProductoParameter", SqlDbType.VarChar) { Value = IdProducto };
+                SqlParameter comentariosParameter = new SqlParameter("comentariosParameter", SqlDbType.VarChar) { Value = venta.Comentarios };
+                SqlParameter stockParameter = new SqlParameter("stockParameter", SqlDbType.BigInt) { Value = Stock };
+                SqlParameter idProductoParameter = new SqlParameter("idProductoParameter", SqlDbType.BigInt) { Value = IdProducto };
                 SqlParameter idUsuarioParameter = new SqlParameter("idUsuarioParameter", SqlDbType.BigInt) { Value = venta.IdUsuario };
 
 
@@ -52,6 +53,7 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
 
                 using (SqlCommand sqlCommand = new SqlCommand(queryInsert2, sqlConnection))
                 {
+                    sqlCommand.Parameters.Add(comentariosParameter);
                     sqlCommand.Parameters.Add(stockParameter);
                     sqlCommand.Parameters.Add(idProductoParameter);
                     sqlCommand.Parameters.Add(idUsuarioParameter);
@@ -67,15 +69,18 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
 
-                string queryInsert3 = "UPDATE Producto SET Stock = Stock -1 WHERE Descripciones = @comentariosParameter;";
+                string queryInsert3 = "UPDATE Producto SET Stock = Stock - @stockParameter WHERE Descripciones = @descripcionParameter;";
 
-                SqlParameter comentariosParameter = new SqlParameter("comentariosParameter", SqlDbType.VarChar) { Value = venta.Comentarios };
+                SqlParameter stockParameter = new SqlParameter("stockParameter", SqlDbType.BigInt) { Value = Stock};
+                SqlParameter descripcionParameter = new SqlParameter("descripcionParameter", SqlDbType.VarChar) { Value = venta.Comentarios };
+
 
                 sqlConnection.Open();
 
                 using (SqlCommand sqlCommand = new SqlCommand(queryInsert3, sqlConnection))
                 {
-                    sqlCommand.Parameters.Add(comentariosParameter);
+                    sqlCommand.Parameters.Add(descripcionParameter);
+                    sqlCommand.Parameters.Add(stockParameter);
 
                     int numberOfRows = sqlCommand.ExecuteNonQuery();
 
@@ -86,7 +91,6 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
 
             return resultado;
         }
-
 
         //Eliminar Venta
         public static bool EliminarVenta(int id)
