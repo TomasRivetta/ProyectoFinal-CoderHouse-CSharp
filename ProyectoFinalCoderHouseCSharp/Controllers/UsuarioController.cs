@@ -75,7 +75,7 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
 
         //BORRAR USUARIO
         [HttpDelete("{id}")]
-        public bool EliminarUsuario([FromBody] int id)
+        public bool EliminarUsuario(int id)
         {
             try
             {

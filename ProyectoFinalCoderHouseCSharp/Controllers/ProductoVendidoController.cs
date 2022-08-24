@@ -21,6 +21,5 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
         {
             return ProductoVendidoHandler.ProductosVendidos(idVenta);
         }
-
     }
 }

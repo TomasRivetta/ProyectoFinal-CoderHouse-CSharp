@@ -9,14 +9,12 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
         public const string ConnectionString = "Server=PCCESAR;DataBase=SistemaGestion;Trusted_Connection=True";
 
         //Cargar Venta
-        public static bool CargarVenta(Venta venta)
+        public static bool CargarVenta(int Stock,int IdProducto,Venta venta)
         {
             bool resultado = false;
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
-                string queryInsert = "INSERT INTO [SistemaGestion].[dbo].[Venta] " +
-                    "(Comentarios,IdUsuario) VALUES " +
-                    "(@comentariosParameter, @idUsuarioParameter);";
+                string queryInsert = "IF EXISTS(SELECT * FROM Producto WHERE Descripciones = @comentariosParameter) BEGIN INSERT INTO [SistemaGestion].[dbo].[Venta] (Comentarios,IdUsuario) VALUES (@comentariosParameter,@idUsuarioParameter) END;";
 
                 SqlParameter comentariosParameter = new SqlParameter("comentariosParameter", SqlDbType.VarChar) { Value = venta.Comentarios };
                 SqlParameter idUsuarioParameter = new SqlParameter("idUsuarioParameter", SqlDbType.BigInt) { Value = venta.IdUsuario };
@@ -43,13 +41,39 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
 
-                string queryInsert2 = "UPDATE Producto SET Stock = Stock -1 WHERE Descripciones = @comentariosParameter";
+                string queryInsert2 = "INSERT INTO ProductoVendido(Stock,IdProducto,IdVenta) VALUES (@stockParameter,@idProductoParameter,@idUsuarioParameter);";
+
+                SqlParameter stockParameter = new SqlParameter("stockParameter", SqlDbType.VarChar) { Value = Stock };
+                SqlParameter idProductoParameter = new SqlParameter("idProductoParameter", SqlDbType.VarChar) { Value = IdProducto };
+                SqlParameter idUsuarioParameter = new SqlParameter("idUsuarioParameter", SqlDbType.BigInt) { Value = venta.IdUsuario };
+
+
+                sqlConnection.Open();
+
+                using (SqlCommand sqlCommand = new SqlCommand(queryInsert2, sqlConnection))
+                {
+                    sqlCommand.Parameters.Add(stockParameter);
+                    sqlCommand.Parameters.Add(idProductoParameter);
+                    sqlCommand.Parameters.Add(idUsuarioParameter);
+
+
+                    int numberOfRows = sqlCommand.ExecuteNonQuery();
+
+                }
+
+                sqlConnection.Close();
+            }
+
+            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+            {
+
+                string queryInsert3 = "UPDATE Producto SET Stock = Stock -1 WHERE Descripciones = @comentariosParameter;";
 
                 SqlParameter comentariosParameter = new SqlParameter("comentariosParameter", SqlDbType.VarChar) { Value = venta.Comentarios };
 
                 sqlConnection.Open();
 
-                using (SqlCommand sqlCommand = new SqlCommand(queryInsert2, sqlConnection))
+                using (SqlCommand sqlCommand = new SqlCommand(queryInsert3, sqlConnection))
                 {
                     sqlCommand.Parameters.Add(comentariosParameter);
 
@@ -88,46 +112,44 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
 
                 sqlConnection.Close();
             }
+            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+            {
+                string queryDelete2 = "DELETE FROM ProductoVendido WHERE IdProducto = @idParameter1";
 
-            //using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
-            //{
-            //    string queryDelete2 = "DELETE FROM ProductoVendido WHERE IdProducto = @idParameter1";
-
-            //    SqlParameter idParameter1 = new SqlParameter("idParameter1", SqlDbType.BigInt) { Value = id };
+                SqlParameter idParameter1 = new SqlParameter("idParameter1", SqlDbType.BigInt) { Value = id };
 
 
-            //    sqlConnection.Open();
+                sqlConnection.Open();
 
-            //    using (SqlCommand sqlCommand = new SqlCommand(queryDelete2, sqlConnection))
-            //    {
-            //        sqlCommand.Parameters.Add(idParameter1);
-            //        int numberOfRows = sqlCommand.ExecuteNonQuery();
+                using (SqlCommand sqlCommand = new SqlCommand(queryDelete2, sqlConnection))
+                {
+                    sqlCommand.Parameters.Add(idParameter1);
+                    int numberOfRows = sqlCommand.ExecuteNonQuery();
 
-            //    }
+                }
 
-            //    sqlConnection.Close();
-            //}
+                sqlConnection.Close();
+            }
 
-            //using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
-            //{
+            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+            {
 
-            //    string queryInsert3 = "UPDATE Producto SET Stock = Stock + 1 WHERE Descripciones = @idParameter2";
+                string queryInsert3 = "UPDATE Producto SET Stock = Stock + 1 WHERE Descripciones = @idParameter2";
 
-            //    SqlParameter idParameter2 = new SqlParameter("idParameter2", SqlDbType.VarChar) { Value = };
+                SqlParameter idParameter2 = new SqlParameter("idParameter2", SqlDbType.VarChar) { Value = id};
 
-            //    sqlConnection.Open();
+                sqlConnection.Open();
 
-            //    using (SqlCommand sqlCommand = new SqlCommand(queryInsert3, sqlConnection))
-            //    {
-            //        sqlCommand.Parameters.Add(idParameter2);
+                using (SqlCommand sqlCommand = new SqlCommand(queryInsert3, sqlConnection))
+                {
+                    sqlCommand.Parameters.Add(idParameter2);
 
-            //        int numberOfRows = sqlCommand.ExecuteNonQuery();
+                    int numberOfRows = sqlCommand.ExecuteNonQuery();
 
-            //    }
+                }
 
-            //    sqlConnection.Close();
-            //}
-
+                sqlConnection.Close();
+            }
             return resultado;
         }
 

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\CESAR\\Desktop\\GITHUB\\ProyectoFinal-CoderHouse-CSharp\\ProyectoFinalCoderHouseCSharp\\ProyectoFinalCoderHouseCSharp.csproj": {}
+    "C:\\Users\\CESAR\\Desktop\\SERVIDOR\\ProyectoFinal-CoderHouse-CSharp\\ProyectoFinalCoderHouseCSharp\\ProyectoFinalCoderHouseCSharp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\CESAR\\Desktop\\GITHUB\\ProyectoFinal-CoderHouse-CSharp\\ProyectoFinalCoderHouseCSharp\\ProyectoFinalCoderHouseCSharp.csproj": {
+    "C:\\Users\\CESAR\\Desktop\\SERVIDOR\\ProyectoFinal-CoderHouse-CSharp\\ProyectoFinalCoderHouseCSharp\\ProyectoFinalCoderHouseCSharp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\CESAR\\Desktop\\GITHUB\\ProyectoFinal-CoderHouse-CSharp\\ProyectoFinalCoderHouseCSharp\\ProyectoFinalCoderHouseCSharp.csproj",
+        "projectUniqueName": "C:\\Users\\CESAR\\Desktop\\SERVIDOR\\ProyectoFinal-CoderHouse-CSharp\\ProyectoFinalCoderHouseCSharp\\ProyectoFinalCoderHouseCSharp.csproj",
         "projectName": "ProyectoFinalCoderHouseCSharp",
-        "projectPath": "C:\\Users\\CESAR\\Desktop\\GITHUB\\ProyectoFinal-CoderHouse-CSharp\\ProyectoFinalCoderHouseCSharp\\ProyectoFinalCoderHouseCSharp.csproj",
+        "projectPath": "C:\\Users\\CESAR\\Desktop\\SERVIDOR\\ProyectoFinal-CoderHouse-CSharp\\ProyectoFinalCoderHouseCSharp\\ProyectoFinalCoderHouseCSharp.csproj",
         "packagesPath": "C:\\Users\\CESAR\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\CESAR\\Desktop\\GITHUB\\ProyectoFinal-CoderHouse-CSharp\\ProyectoFinalCoderHouseCSharp\\obj\\",
+        "outputPath": "C:\\Users\\CESAR\\Desktop\\SERVIDOR\\ProyectoFinal-CoderHouse-CSharp\\ProyectoFinalCoderHouseCSharp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\CESAR\\AppData\\Roaming\\NuGet\\NuGet.Config",

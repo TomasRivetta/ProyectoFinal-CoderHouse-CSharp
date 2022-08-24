@@ -12,11 +12,11 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
 
         //Cargar Venta
         [HttpPost]
-        public bool CargarVenta([FromBody] PostVenta venta)
+        public bool CargarVenta([FromBody] PostVenta venta,int Stock,int IdProducto)
         {
             try
             {
-                return VentaHandler.CargarVenta(new Venta
+                return VentaHandler.CargarVenta(Stock, IdProducto,new Venta
                 {
 
                     Comentarios = venta.Comentarios,
@@ -33,7 +33,7 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
 
         //Eliminar Venta
         [HttpDelete("{id}")]
-        public bool EliminarVenta([FromBody] int id)
+        public bool EliminarVenta(int id)
         {
             try
             {

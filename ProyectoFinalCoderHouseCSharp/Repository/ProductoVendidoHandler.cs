@@ -71,7 +71,7 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
                             {
 
                                 ProductoVendido productoVendido = new ProductoVendido();
-                                
+
                                 productoVendido.Id = Convert.ToInt32(dataReader["Id"]);
                                 productoVendido.Stock = Convert.ToInt32(dataReader["Stock"]);
                                 productoVendido.IdProducto = Convert.ToInt32(dataReader["IdProducto"]);
@@ -80,6 +80,17 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
                                 productosVendidos.Add(productoVendido);
 
                             }
+                        }
+                        else
+                        {
+                            ProductoVendido productoVendido = new ProductoVendido();
+
+                            productoVendido.Id = 0;
+                            productoVendido.Stock = 0;
+                            productoVendido.IdProducto = 0;
+                            productoVendido.IdVenta = idVenta;
+
+                            productosVendidos.Add(productoVendido);
                         }
                     }
                     sqlConnection.Close();

@@ -99,27 +99,6 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
             bool resultado = false;
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
-                string queryDelete = "DELETE FROM ProductoVendido WHERE IdProducto = @idParameter";
-
-                SqlParameter idParameter = new SqlParameter("idParameter", SqlDbType.BigInt) { Value = idProducto };
-
-                sqlConnection.Open();
-
-                using (SqlCommand sqlCommand = new SqlCommand(queryDelete, sqlConnection))
-                {
-                    sqlCommand.Parameters.Add(idParameter);
-                    int numberOfRows = sqlCommand.ExecuteNonQuery();
-                    if (numberOfRows > 0)
-                    {
-                        resultado = true;
-                    }
-                }
-
-                sqlConnection.Close();
-            }
-
-            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
-            {
                 string queryDelete2 = "DELETE FROM Producto WHERE Id = @idParameter";
 
                 SqlParameter idParameter = new SqlParameter("idParameter", SqlDbType.BigInt) { Value = idProducto };
@@ -131,7 +110,10 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
                 {
                     sqlCommand.Parameters.Add(idParameter);
                     int numberOfRows = sqlCommand.ExecuteNonQuery();
-
+                    if (numberOfRows > 0)
+                    {
+                        resultado = true;
+                    }
                 }
 
                 sqlConnection.Close();
@@ -207,6 +189,19 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
 
                                 resultados.Add(producto);
                             }
+                        }
+                        else
+                        {
+                            Producto producto = new Producto();
+                            producto.Id = 0;
+                            producto.Descripciones = "No cargo ningun Producto, el Usuario: " + idUsuario ;
+                            producto.Costo = 0;
+                            producto.PrecioVenta = 0;
+                            producto.Stock = 0;
+                            producto.IdUsuario = idUsuario;
+
+                            resultados.Add(producto);
+
                         }
                     }
                     sqlConnection.Close();

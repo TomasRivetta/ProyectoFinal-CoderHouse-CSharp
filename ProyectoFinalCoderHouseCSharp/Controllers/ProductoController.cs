@@ -53,7 +53,7 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
 
         //Eliminar un Producto
         [HttpDelete("{idProducto}")]
-        public bool EliminarProducto([FromBody] int idProducto)
+        public bool EliminarProducto(int idProducto)
         {
             try
             {

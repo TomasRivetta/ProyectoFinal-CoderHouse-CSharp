@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "Hd+EZbzc8B5mPJTDJj6ndjuirj/OT9Ijl7nCzAJCmLtVdSinm9yF3NFr3Py1rVRyxSZYMjpQVsEYzXVSHdMB8Q==",
+  "dgSpecHash": "aGjfCsGAQZj6sLJk68KoIEVfat1eKKTiZ54tOlXYk4oTAMKbNjTzuji4tlyuXV23yVGPtqp1QYlxR+RZ3DBNRw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\CESAR\\Desktop\\GITHUB\\ProyectoFinal-CoderHouse-CSharp\\ProyectoFinalCoderHouseCSharp\\ProyectoFinalCoderHouseCSharp.csproj",
+  "projectFilePath": "C:\\Users\\CESAR\\Desktop\\SERVIDOR\\ProyectoFinal-CoderHouse-CSharp\\ProyectoFinalCoderHouseCSharp\\ProyectoFinalCoderHouseCSharp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\CESAR\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\CESAR\\.nuget\\packages\\microsoft.netcore.platforms\\3.1.0\\microsoft.netcore.platforms.3.1.0.nupkg.sha512",
