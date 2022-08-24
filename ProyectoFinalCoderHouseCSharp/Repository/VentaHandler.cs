@@ -69,7 +69,7 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
 
-                string queryInsert3 = "UPDATE Producto SET Stock = Stock - @stockParameter WHERE Descripciones = @descripcionParameter;";
+                string queryUpdate = "UPDATE Producto SET Stock = Stock - @stockParameter WHERE Descripciones = @descripcionParameter;";
 
                 SqlParameter stockParameter = new SqlParameter("stockParameter", SqlDbType.BigInt) { Value = Stock};
                 SqlParameter descripcionParameter = new SqlParameter("descripcionParameter", SqlDbType.VarChar) { Value = venta.Comentarios };
@@ -77,7 +77,7 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
 
                 sqlConnection.Open();
 
-                using (SqlCommand sqlCommand = new SqlCommand(queryInsert3, sqlConnection))
+                using (SqlCommand sqlCommand = new SqlCommand(queryUpdate, sqlConnection))
                 {
                     sqlCommand.Parameters.Add(descripcionParameter);
                     sqlCommand.Parameters.Add(stockParameter);
@@ -93,9 +93,32 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
         }
 
         //Eliminar Venta
-        public static bool EliminarVenta(int id)
+        public static bool EliminarVenta(int id,string comentario)
         {
             bool resultado = false;
+
+            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+            {
+                string queryUpdate = "IF EXISTS(SELECT Id FROM Venta WHERE Id = @idParameter1) BEGIN UPDATE Producto SET Stock = Stock + 1 WHERE Descripciones = @descripcionesParameter END;";
+                SqlParameter descripcionesParameter = new SqlParameter("descripcionesParameter", SqlDbType.VarChar) { Value = comentario };
+                SqlParameter idParameter1 = new SqlParameter("idParameter1", SqlDbType.BigInt) { Value = id };
+
+
+                sqlConnection.Open();
+
+                using (SqlCommand sqlCommand = new SqlCommand(queryUpdate, sqlConnection))
+                {
+                    sqlCommand.Parameters.Add(descripcionesParameter);
+                    sqlCommand.Parameters.Add(idParameter1);
+
+
+                    int numberOfRows = sqlCommand.ExecuteNonQuery();
+
+                }
+
+                sqlConnection.Close();
+            }
+
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
                 string queryDelete = "DELETE FROM Venta WHERE Id = @idParameter";
@@ -122,7 +145,6 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
 
                 SqlParameter idParameter1 = new SqlParameter("idParameter1", SqlDbType.BigInt) { Value = id };
 
-
                 sqlConnection.Open();
 
                 using (SqlCommand sqlCommand = new SqlCommand(queryDelete2, sqlConnection))
@@ -134,34 +156,12 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
 
                 sqlConnection.Close();
             }
-
-            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
-            {
-
-                string queryInsert3 = "UPDATE Producto SET Stock = Stock + 1 WHERE Descripciones = @idParameter2";
-
-                SqlParameter idParameter2 = new SqlParameter("idParameter2", SqlDbType.VarChar) { Value = id};
-
-                sqlConnection.Open();
-
-                using (SqlCommand sqlCommand = new SqlCommand(queryInsert3, sqlConnection))
-                {
-                    sqlCommand.Parameters.Add(idParameter2);
-
-                    int numberOfRows = sqlCommand.ExecuteNonQuery();
-
-                }
-
-                sqlConnection.Close();
-            }
             return resultado;
         }
-
 
         //Traer Ventas
         public static List<Venta> GetVentas()
         {
-
             List<Venta> ventas = new List<Venta>();
 
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
@@ -191,10 +191,7 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
                     sqlConnection.Close();
                 }
             }
-
             return ventas;
-
         }
-
     }
 }

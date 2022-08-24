@@ -33,12 +33,12 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
 
 
         //Eliminar Venta
-        [HttpDelete("{id}")]
-        public bool EliminarVenta(int id)
+        [HttpDelete("{id}/{comentario}")]
+        public bool EliminarVenta(int id,string comentario)
         {
             try
             {
-                return VentaHandler.EliminarVenta(id);
+                return VentaHandler.EliminarVenta(id,comentario);
             }
             catch (Exception ex)
             {
