@@ -9,7 +9,7 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
         [HttpGet("{nombreLocal}")]
         public string TraerNombre(string nombreLocal)
         {
-            return "El nombre del Local es: " + nombreLocal;
+            return "Nombre del Local: " + nombreLocal;
         }
     }
 }

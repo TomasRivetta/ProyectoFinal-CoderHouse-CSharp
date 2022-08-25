@@ -66,7 +66,6 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
                 SqlParameter stockParameter = new SqlParameter("stock", SqlDbType.BigInt) { Value = producto.Stock };
                 SqlParameter idUsuarioParameter = new SqlParameter("idUsuario", SqlDbType.BigInt) { Value = producto.IdUsuario };
 
-
                 sqlConnection.Open();
 
                 using (SqlCommand sqlCommand = new SqlCommand(queryInsert, sqlConnection))
@@ -160,7 +159,7 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
         }
 
 
-        //Traer Productos de cierto usuario
+        //Traer Productos cargados por cierto usuario
         public static List<Producto> TraerProductos(int idUsuario)
         {
             List<Producto> resultados = new List<Producto>();

@@ -99,7 +99,8 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
 
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
-                string queryUpdate = "IF EXISTS(SELECT Id FROM Venta WHERE Id = @idParameter1) BEGIN UPDATE Producto SET Stock = Stock + 1 WHERE Descripciones = @descripcionesParameter END;";
+                string queryUpdate = "IF EXISTS(SELECT Id,Comentarios FROM Venta WHERE Id = @idParameter1 AND Comentarios = @descripcionesParameter) " +
+                    "BEGIN UPDATE Producto SET Stock = Stock + 1 WHERE Descripciones = @descripcionesParameter END;";
                 SqlParameter descripcionesParameter = new SqlParameter("descripcionesParameter", SqlDbType.VarChar) { Value = comentario };
                 SqlParameter idParameter1 = new SqlParameter("idParameter1", SqlDbType.BigInt) { Value = id };
 
@@ -160,14 +161,16 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
         }
 
         //Traer Ventas
-        public static List<Venta> GetVentas()
+        public static List<ProductoVendidoWithVenta> ProductoVendidoWithVenta()
         {
-            List<Venta> ventas = new List<Venta>();
+            List<ProductoVendidoWithVenta> productosVendido = new List<ProductoVendidoWithVenta>();
 
             using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
             {
-                using (SqlCommand sqlCommand = new SqlCommand("SELECT * FROM Venta", sqlConnection))
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT Venta.Id,Venta.Comentarios,Venta.IdUsuario,ProductoVendido.Stock,ProductoVendido.IdProducto,ProductoVendido.IdVenta " +
+                    "FROM ProductoVendido INNER JOIN Venta ON Venta.IdUsuario = ProductoVendido.IdVenta", sqlConnection))
                 {
+
                     sqlConnection.Open();
 
                     using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
@@ -178,20 +181,95 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
                             while (dataReader.Read())
                             {
 
-                                Venta venta = new Venta();
+                                ProductoVendidoWithVenta productoVendido = new ProductoVendidoWithVenta();
 
-                                venta.Id = Convert.ToInt32(dataReader["Id"]);
-                                venta.Comentarios = dataReader["Comentarios"].ToString();
-                                venta.IdUsuario = Convert.ToInt32(dataReader["IdUsuario"]);
+                                productoVendido.VentaId = Convert.ToInt32(dataReader["Id"]);
+                                productoVendido.Comentarios = dataReader["Comentarios"].ToString();
+                                productoVendido.IdUsuario = Convert.ToInt32(dataReader["IdUsuario"]);
+                                productoVendido.Stock = Convert.ToInt32(dataReader["Stock"]);
+                                productoVendido.IdProducto = Convert.ToInt32(dataReader["IdProducto"]);
+                                productoVendido.IdVenta = Convert.ToInt32(dataReader["IdVenta"]);
 
-                                ventas.Add(venta);
+                                productosVendido.Add(productoVendido);
+
                             }
+                        }
+                        else
+                        {
+                            ProductoVendidoWithVenta productoVendido = new ProductoVendidoWithVenta();
+
+                            productoVendido.VentaId = 0;
+                            productoVendido.Comentarios = "";
+                            productoVendido.IdUsuario = 0;
+                            productoVendido.Stock = 0;
+                            productoVendido.IdProducto = 0;
+                            productoVendido.IdVenta = 0;
+
+
+                            productosVendido.Add(productoVendido);
                         }
                     }
                     sqlConnection.Close();
                 }
             }
-            return ventas;
+            return productosVendido;
+        }
+
+        //Traer Ventas de cierto Usuario
+        public static List<ProductoVendidoWithVenta> ProductoVendidoWithVenta(int idVenta)
+        {
+            List<ProductoVendidoWithVenta> productosVendido = new List<ProductoVendidoWithVenta>();
+
+            using (SqlConnection sqlConnection = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand sqlCommand = new SqlCommand("SELECT Venta.Id,Venta.Comentarios,Venta.IdUsuario,ProductoVendido.Stock,ProductoVendido.IdProducto,ProductoVendido.IdVenta " +
+                    "FROM ProductoVendido INNER JOIN Venta ON Venta.IdUsuario = ProductoVendido.IdVenta WHERE IdVenta = @idVenta", sqlConnection))
+                {
+
+                    sqlCommand.Parameters.AddWithValue("@idVenta", idVenta);
+
+                    sqlConnection.Open();
+
+                    using (SqlDataReader dataReader = sqlCommand.ExecuteReader())
+                    {
+
+                        if (dataReader.HasRows)
+                        {
+                            while (dataReader.Read())
+                            {
+
+                                ProductoVendidoWithVenta productoVendido = new ProductoVendidoWithVenta();
+
+                                productoVendido.VentaId = Convert.ToInt32(dataReader["Id"]);
+                                productoVendido.Comentarios = dataReader["Comentarios"].ToString();
+                                productoVendido.IdUsuario = Convert.ToInt32(dataReader["IdUsuario"]);
+                                productoVendido.Stock = Convert.ToInt32(dataReader["Stock"]);
+                                productoVendido.IdProducto = Convert.ToInt32(dataReader["IdProducto"]);
+                                productoVendido.IdVenta = Convert.ToInt32(dataReader["IdVenta"]);
+
+                                productosVendido.Add(productoVendido);
+
+                            }
+                        }
+                        else
+                        {
+                            ProductoVendidoWithVenta productoVendido = new ProductoVendidoWithVenta();
+
+                            productoVendido.VentaId = 0;
+                            productoVendido.Comentarios = "";
+                            productoVendido.IdUsuario = 0;
+                            productoVendido.Stock = 0;
+                            productoVendido.IdProducto = 0;
+                            productoVendido.IdVenta = idVenta;
+
+
+                            productosVendido.Add(productoVendido);
+                        }
+                    }
+                    sqlConnection.Close();
+                }
+            }
+            return productosVendido;
         }
     }
 }

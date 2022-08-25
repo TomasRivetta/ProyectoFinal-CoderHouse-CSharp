@@ -31,7 +31,6 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
         {
             try
             {
-
                 return UsuarioHandler.CrearUsuario(new Usuario
                 {
 

@@ -8,18 +8,11 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
     [Route("[controller]")]
     public class ProductoVendidoController : ControllerBase
     {
-        //Traer Productos vendidos
-        [HttpGet(Name = "TodosLosProductosVendidos")]
-        public List<ProductoVendido> GetProductosVendidos()
-        {
-            return ProductoVendidoHandler.GetProductosVendidos();
-        }
-
         //Traer Productos vendidos de cierto Usuario
         [HttpGet("{idVenta}")]
-        public List<ProductoVendido> ProductosVendidos(int idVenta)
+        public List<ProductoVendidoWithProducto> ProductoVendidoWithProducto(int idVenta)
         {
-            return ProductoVendidoHandler.ProductosVendidos(idVenta);
+            return ProductoVendidoHandler.ProductoVendidoWithProducto(idVenta);
         }
     }
 }

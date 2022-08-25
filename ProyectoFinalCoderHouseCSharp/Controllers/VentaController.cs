@@ -31,7 +31,6 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
             }
         }
 
-
         //Eliminar Venta
         [HttpDelete("{id}/{comentario}")]
         public bool EliminarVenta(int id,string comentario)
@@ -49,9 +48,16 @@ namespace ProyectoFinalCoderHouseCSharp.Controllers
 
         //Traer Venta
         [HttpGet]
-        public List<Venta> GetVentas()
+        public List<ProductoVendidoWithVenta> ProductoVendidoWithVenta()
         {
-            return VentaHandler.GetVentas();
+            return VentaHandler.ProductoVendidoWithVenta();
+        }
+
+        //Traer Ventas de cierto Usuario
+        [HttpGet("{idVenta}")]
+        public List<ProductoVendidoWithVenta> ProductoVendidoWithVenta(int idVenta)
+        {
+            return VentaHandler.ProductoVendidoWithVenta(idVenta);
         }
     }
 }

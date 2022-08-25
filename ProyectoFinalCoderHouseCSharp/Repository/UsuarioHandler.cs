@@ -107,15 +107,15 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
             {
                 string queryInsert = "UPDATE [SistemaGestion].[dbo].[Usuario] " +
                     "SET Nombre = @nombre ,Apellido = @apellido ,NombreUsuario = @nombreUsuario ,Contraseña = @contraseña ,Mail = @mail WHERE Id = @id";
-
+                //string queryInsert = "IF EXISTS (SELECT * FROM Usuario WHERE ((Nombre=@nombre AND Apellido = @apellido) OR NombreUsuario = @nombreUsuario OR Mail = @mail))" +
+                //    "BEGIN UPDATE [SistemaGestion].[dbo].[Usuario] SET Nombre=@nombre,Apellido=@apellido,NombreUsuario=@nombreUsuario,Contraseña=@contraseña,Mail=@mail " +
+                //    "WHERE Id = @id END;";
                 SqlParameter idParameter = new SqlParameter("id", SqlDbType.BigInt) { Value = usuario.Id };
                 SqlParameter nombreParameter = new SqlParameter("nombre", SqlDbType.VarChar) { Value = usuario.Nombre };
                 SqlParameter apellidoParameter = new SqlParameter("apellido", SqlDbType.VarChar) { Value = usuario.Apellido };
                 SqlParameter nombreUsuarioParameter = new SqlParameter("nombreUsuario", SqlDbType.VarChar) { Value = usuario.NombreUsuario };
                 SqlParameter contraseñaParameter = new SqlParameter("contraseña", SqlDbType.VarChar) { Value = usuario.Contraseña };
                 SqlParameter mailParameter = new SqlParameter("mail", SqlDbType.VarChar) { Value = usuario.Mail };
-
-
 
                 sqlConnection.Open();
 
@@ -181,11 +181,11 @@ namespace ProyectoFinalCoderHouseCSharp.Repository
                             Usuario usuario = new Usuario();
 
                             usuario.Id = 0;
-                            usuario.NombreUsuario = null;
-                            usuario.Nombre = null;
-                            usuario.Apellido = null;
-                            usuario.Contraseña = null;
-                            usuario.Mail = null;
+                            usuario.NombreUsuario = "";
+                            usuario.Nombre = "";
+                            usuario.Apellido = "";
+                            usuario.Contraseña = "";
+                            usuario.Mail = "";
 
                             resultados.Add(usuario);
 
